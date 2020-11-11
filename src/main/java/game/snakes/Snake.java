@@ -2,28 +2,20 @@ package game.snakes;
 
 import game.Entity;
 
-public class Snake  implements Entity {
-    private int head;
-    private int tail;
+public class Snake implements Entity {
+    private int mouthPosition;
+    private int tailPosition;
 
-    public Snake(int head, int tail) {
-        this.head = head;
-        this.tail = tail;
+    public Snake(int mouthPosition, int tailPosition) {
+        this.mouthPosition = mouthPosition;
+        this.tailPosition = tailPosition;
     }
 
-    public int getHead() {
-        return head;
+    public int getMouthPosition() {
+        return mouthPosition;
     }
 
-    public void setHead(int head) {
-        this.head = head;
-    }
-
-    public int getTail() {
-        return tail;
-    }
-
-    public void setTail(int tail) {
-        this.tail = tail;
+    public int getTailPosition() {
+        return tailPosition;
     }
 }

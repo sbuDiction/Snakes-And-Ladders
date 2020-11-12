@@ -1,6 +1,7 @@
 package game.snakes;
 
-import game.Entity;
+import game.game_utilities.Colors;
+import game.snakes_interface.Entity;
 
 public class Snake implements Entity {
     private int mouthPosition;
@@ -17,5 +18,9 @@ public class Snake implements Entity {
 
     public int getTailPosition() {
         return tailPosition;
+    }
+
+    public String toString() {
+        return Colors.RED_BOLD + "S" + Colors.RESET;
     }
 }

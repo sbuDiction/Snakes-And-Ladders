@@ -1,12 +1,13 @@
 package game.ladders;
 
-import game.Entity;
+import game.game_utilities.Colors;
+import game.snakes_interface.Entity;
 
 public class Ladder implements Entity {
     private int foot = 4;
     private int head = 14;
 
-    public Ladder(int foot, int head){
+    public Ladder(int foot, int head) {
         this.foot = foot;
         this.head = head;
     }
@@ -27,7 +28,7 @@ public class Ladder implements Entity {
         this.head = head;
     }
 
-    public String toString(){
-        return "Ladder";
+    public String toString() {
+        return Colors.BLUE_BOLD + "L" + Colors.RESET;
     }
 }

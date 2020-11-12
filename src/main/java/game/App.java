@@ -3,6 +3,7 @@ package game;
 import game.ladders.*;
 import game.player.Player;
 import game.snakes.Snake;
+import game.snakes_interface.Entity;
 
 public class App {
     Entity[] board = new Entity[101];
@@ -38,7 +39,7 @@ public class App {
     }
 
     public void movePlayer(Player player, int numberOfMoves) {
-        int currentPlayerPosition = player.getPosition();
+//        int currentPlayerPosition = player.getPosition(),
         int positionPlayerGoing = player.getPosition() + numberOfMoves;
         if (checkForSnakesAndLadders(positionPlayerGoing)) {
             if (board[positionPlayerGoing] instanceof Snake) {
@@ -47,19 +48,25 @@ public class App {
                         board[positionPlayerGoing]
                         + "\nPlayer current position: "
                         + player.getPosition());
+                updatePlayerPositionOnBord(player, positionPlayerGoing);
             }
             if (board[positionPlayerGoing] instanceof Ladder) {
                 movePlayerUpLadder(player, board[positionPlayerGoing]);
                 System.out.println("You found a Ladder Yey! at position0: " + positionPlayerGoing + "\n");
-
+                updatePlayerPositionOnBord(player, positionPlayerGoing);
             }
         } else {
-            player.setPosition(positionPlayerGoing);
-            board[currentPlayerPosition] = new Tile(currentPlayerPosition);
-
-            int newPlayerPosition = player.getPosition();
-            board[newPlayerPosition] = player;
+            updatePlayerPositionOnBord(player, positionPlayerGoing);
         }
+    }
+
+    public void updatePlayerPositionOnBord(Player player, int newPosition) {
+        int currentPlayerPosition = player.getPosition();
+        player.setPosition(newPosition);
+        board[currentPlayerPosition] = new Tile(currentPlayerPosition);
+
+        int newPlayerPosition = player.getPosition();
+        board[newPlayerPosition] = player;
     }
 
     public void movePlayerDownSnake(Player player, Entity entity) {
@@ -77,12 +84,27 @@ public class App {
     }
 
     public void displayBoard() {
-        for (int i = 1; i < board.length - 1; i++)
-            System.out.println(board[i]);
+        String gameBoard = "";
+
+        for (int i = 1; i < board.length - 1; i++) {
+            if (i % 10 == 0) {
+                gameBoard += " \t" + board[i];
+                gameBoard += "\n";
+            } else {
+                gameBoard += " \t" + board[i];
+            }
+        }
+        System.out.println(gameBoard);
     }
 
     public boolean checkForSnakesAndLadders(int positionNumber) {
-        return board[positionNumber] instanceof Snake || board[positionNumber] instanceof Ladders;
+        return board[positionNumber] instanceof Snake || board[positionNumber] instanceof Ladder;
+    }
+
+    public static void main(String[] args) {
+        App app = new App();
+        app.buildBord();
+        app.displayBoard();
     }
 
 }

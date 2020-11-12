@@ -1,6 +1,6 @@
 package game.ladders;
 
-import game.Entity;
+import game.snakes_interface.Entity;
 
 public class Tile implements Entity {
 

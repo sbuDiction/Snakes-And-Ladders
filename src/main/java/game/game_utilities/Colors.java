@@ -1,5 +1,11 @@
 package game.game_utilities;
 
+/**
+ * @version 1.0
+ * @authors Sibusiso Nkosi
+ */
+
+
 public class Colors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset

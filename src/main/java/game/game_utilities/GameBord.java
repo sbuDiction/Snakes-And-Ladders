@@ -1,10 +1,14 @@
 package game.game_utilities;
 
 import game.App;
-import game.game_utilities.Colors;
 import game.player.Player;
 
 import java.util.Scanner;
+
+/**
+ * @version 1.0
+ * @authors Sibusiso Nkosi, Mohammed Thaabit
+ */
 
 public class GameBord {
 
@@ -21,26 +25,29 @@ public class GameBord {
             String strInput = scanner.nextLine();
             if (strInput.equals("roll")) {
                 int diceRoll = player1.rollDice();
+                System.out.println(Colors.CYAN + "You rolled a number: " + Colors.RESET + Colors.PURPLE + diceRoll + Colors.RESET);
                 START:
                 while (true) {
                     if (diceRoll == 6) {
-                        System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Do you want to roll?" + Colors.RESET);
-                        System.out.println(Colors.BLUE + "roll " + Colors.RESET + Colors.RED + "or" + " exit" + Colors.RESET);
+                        player1.setPosition(1);
+                        System.out.println(Colors.GREEN + "Yay!! you rolled a six: " + Colors.RESET);
                         MAINGAME:
                         while (true) {
                             if (strInput.equals("roll")) {
-                                System.out.println("\nDo you want to roll?\nroll/exit");
+                                System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Do you want to roll?" + Colors.RESET);
+                                System.out.println(Colors.BLUE + "roll " + Colors.RESET + Colors.RED + "or" + " exit" + Colors.RESET);
                                 strInput = scanner.nextLine();
                                 int newDiceRoll = player1.rollDice();
+                                System.out.println(Colors.CYAN + "You rolled a: " + newDiceRoll + Colors.RESET);
                                 int curentPlayerPosition = player1.getPosition();
                                 app.movePlayer(player1, newDiceRoll);
 
-                                if(player1.getPosition() >= 100){
-                                    System.out.print("Hooray you won!!!!!");
+                                if (player1.getPosition() >= 100) {
+                                    System.out.print(Colors.GREEN + "Hooray you won!!!!!" + Colors.RESET);
                                     System.exit(0);
                                 }
 
-                                System.out.println("Player moved from: " + curentPlayerPosition + " to: " + player1.getPosition());
+                                System.out.println(Colors.CYAN + "Player moved from: " + Colors.PURPLE + curentPlayerPosition + Colors.CYAN + " to: " + player1.getPosition());
                                 app.displayBoard();
                             } else if (strInput.equals("exit")) {
                                 System.out.println("Thank You for playing");

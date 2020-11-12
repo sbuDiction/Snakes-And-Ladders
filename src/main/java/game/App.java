@@ -1,12 +1,13 @@
 package game;
 
+import game.game_utilities.Colors;
 import game.ladders.*;
 import game.player.Player;
 import game.snakes.Snake;
 import game.snakes_interface.Entity;
 
 public class App {
-    Entity[] board = new Entity[101];
+    Entity[] board = new Entity[102];
 
     public void buildBord() {
         for (int i = 0; i < board.length - 1; i++)
@@ -39,47 +40,52 @@ public class App {
     }
 
     public void movePlayer(Player player, int numberOfMoves) {
-//        int currentPlayerPosition = player.getPosition(),
+        int currentPlayerPosition = player.getPosition();
         int positionPlayerGoing = player.getPosition() + numberOfMoves;
+
         if (checkForSnakesAndLadders(positionPlayerGoing)) {
             if (board[positionPlayerGoing] instanceof Snake) {
                 movePlayerDownSnake(player, board[positionPlayerGoing]);
-                System.out.println("The snake got you!! at position:" +
-                        board[positionPlayerGoing]
-                        + "\nPlayer current position: "
-                        + player.getPosition());
-                updatePlayerPositionOnBord(player, positionPlayerGoing);
+                System.out.println(Colors.RED + "The snake got you!!" + Colors.RESET + "\n");
+                //updatePlayerPositionOnBord(player, positionPlayerGoing, currentPlayerPosition);
             }
             if (board[positionPlayerGoing] instanceof Ladder) {
                 movePlayerUpLadder(player, board[positionPlayerGoing]);
-                System.out.println("You found a Ladder Yey! at position0: " + positionPlayerGoing + "\n");
-                updatePlayerPositionOnBord(player, positionPlayerGoing);
+                System.out.println(Colors.GREEN + "Yey!! You found a Ladder : " + Colors.RESET + "\n");
+                //updatePlayerPositionOnBord(player, positionPlayerGoing, currentPlayerPosition);
             }
         } else {
-            updatePlayerPositionOnBord(player, positionPlayerGoing);
+            updatePlayerPositionOnBord(player, positionPlayerGoing, currentPlayerPosition);
         }
     }
 
-    public void updatePlayerPositionOnBord(Player player, int newPosition) {
-        int currentPlayerPosition = player.getPosition();
+    public void updatePlayerPositionOnBord(Player player, int newPosition, int currentPosition) {
         player.setPosition(newPosition);
-        board[currentPlayerPosition] = new Tile(currentPlayerPosition);
 
-        int newPlayerPosition = player.getPosition();
-        board[newPlayerPosition] = player;
+        board[currentPosition] = new Tile(currentPosition);
+
+        board[newPosition] = player;
     }
 
     public void movePlayerDownSnake(Player player, Entity entity) {
         if (entity instanceof Snake) {
-            player.setPosition(((Snake) (entity)).getTailPosition());
-            board[((Snake) (entity)).getTailPosition()] = player;
+            Snake snake = ((Snake) (entity));
+
+            int pos = player.getPosition();
+
+            player.setPosition(snake.getTailPosition());
+            board[snake.getTailPosition()] = player;
+            board[snake.getMouthPosition()] = snake;
         }
     }
 
     public void movePlayerUpLadder(Player player, Entity entity) {
         if (entity instanceof Ladder) {
-            player.setPosition(((Ladder) (entity)).getHead());
-            board[((Ladder) (entity)).getHead()] = player;
+            Ladder ladder = ((Ladder) (entity));
+
+            player.setPosition(ladder.getHead());
+            board[ladder.getHead()] = player;
+            board[ladder.getFoot()] = ladder;
         }
     }
 
@@ -99,12 +105,6 @@ public class App {
 
     public boolean checkForSnakesAndLadders(int positionNumber) {
         return board[positionNumber] instanceof Snake || board[positionNumber] instanceof Ladder;
-    }
-
-    public static void main(String[] args) {
-        App app = new App();
-        app.buildBord();
-        app.displayBoard();
     }
 
 }

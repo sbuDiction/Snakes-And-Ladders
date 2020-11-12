@@ -4,9 +4,13 @@ package game.player;
 import game.game_utilities.Colors;
 import game.snakes_interface.Entity;
 
+/**
+ * @version 1.0
+ * @authors Sibusiso Nkosi, Mohammed Thaabit
+ */
+
 public class Player implements Entity {
     private int position = 0;
-    private int totalTracker;
 
 
     public int getPosition() {
@@ -28,4 +32,5 @@ public class Player implements Entity {
     public int rollDice(int dice) {
         return dice;
     }
+
 }

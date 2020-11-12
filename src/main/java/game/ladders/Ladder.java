@@ -12,6 +12,11 @@ public class Ladder implements Entity {
         this.head = head;
     }
 
+    public Ladder(Entity entity) {
+        this.foot = ((Ladder)entity).getFoot();
+        this.head = ((Ladder)entity).head;
+    }
+
     public int getFoot() {
         return foot;
     }

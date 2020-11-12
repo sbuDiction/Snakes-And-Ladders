@@ -12,40 +12,58 @@ public class GameBord {
         App app = new App();
         Player player1 = new Player();
         Scanner scanner = new Scanner(System.in);
+
         app.buildBord();
+
         System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Welcome to Snakes and Ladders" + Colors.RESET);
+
         OUTER:
         while (true) {
             System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Do you want to roll?" + Colors.RESET);
             System.out.println(Colors.BLUE + "roll " + Colors.RESET + Colors.RED + "or" + " exit" + Colors.RESET);
+
             String strInput = scanner.nextLine();
+
             if (strInput.equals("roll")) {
                 int diceRoll = player1.rollDice();
+                System.out.println("PLayer roller: " + diceRoll);
+
                 START:
                 while (true) {
                     if (diceRoll == 6) {
+                        player1.setPosition(1);
+
+                        System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Yaayyyy!! you rolled a six" + Colors.RESET);
                         System.out.println(Colors.BLACK_BACKGROUND_BRIGHT + "Do you want to roll?" + Colors.RESET);
                         System.out.println(Colors.BLUE + "roll " + Colors.RESET + Colors.RED + "or" + " exit" + Colors.RESET);
+
                         MAINGAME:
                         while (true) {
                             if (strInput.equals("roll")) {
-                                System.out.println("\nDo you want to roll?\nroll/exit");
                                 strInput = scanner.nextLine();
-                                int newDiceRoll = player1.rollDice();
-                                int curentPlayerPosition = player1.getPosition();
-                                app.movePlayer(player1, newDiceRoll);
 
-                                if(player1.getPosition() >= 100){
+                                diceRoll = player1.rollDice();
+
+                                int curentPlayerPosition = player1.getPosition();
+
+                                if(curentPlayerPosition+diceRoll >= 100){
+                                    app.updatePlayerPositionOnBord(player1, 100);
+                                    app.displayBoard();
+
                                     System.out.print("Hooray you won!!!!!");
                                     System.exit(0);
                                 }
 
+                                app.movePlayer(player1, diceRoll);
+
+                                System.out.println("PLayer roller: " + diceRoll);
                                 System.out.println("Player moved from: " + curentPlayerPosition + " to: " + player1.getPosition());
+
                                 app.displayBoard();
+
                             } else if (strInput.equals("exit")) {
                                 System.out.println("Thank You for playing");
                                 System.exit(0);
-
                             }
                         }
                     } else {

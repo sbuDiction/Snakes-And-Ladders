@@ -12,6 +12,11 @@ public class Snake implements Entity {
         this.tailPosition = tailPosition;
     }
 
+    public Snake(Entity entity) {
+        this.mouthPosition = ((Snake) entity).getMouthPosition();
+        this.tailPosition = ((Snake) entity).getTailPosition();
+    }
+
     public int getMouthPosition() {
         return mouthPosition;
     }
